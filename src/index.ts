@@ -1,5 +1,6 @@
 import { swaggerUI } from '@hono/swagger-ui';
 import { OpenAPIHono } from '@hono/zod-openapi';
+import { apiReference } from '@scalar/hono-api-reference';
 import { UsersRoutes } from './api/users/users.routes';
 import type { Bindings, Variables } from './core/configs/workers';
 import { DrizzleDB } from './core/database/drizzle';
@@ -17,6 +18,20 @@ app.doc('/openapi', {
 
 app.get('/', (c) => c.text('Welcome to this template!'));
 app.get('/swagger', swaggerUI({ url: '/openapi' }));
+
+app.get(
+	'/reference',
+	apiReference({
+		layout: 'classic',
+		defaultHttpClient: {
+			targetKey: 'js',
+			clientKey: 'fetch',
+		},
+		spec: {
+			url: '/openapi',
+		},
+	}),
+);
 
 app.use(async (ctx, next) => {
 	ctx.set('db', DrizzleDB.getInstance(ctx.env.DB));
