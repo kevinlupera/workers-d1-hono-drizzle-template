@@ -1,0 +1,17 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "workers-d1-hono-drizzle-template",
+	"main": "src/index.ts",
+	"compatibility_date": "2025-05-15",
+	"observability": {
+		"enabled": true
+	},
+	"compatibility_flags": ["nodejs_compat"],
+	"d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "test-db",
+      "database_id": "c020574a-5623-407b-be0c-cd192bab9545"
+    }
+  ]
+}
